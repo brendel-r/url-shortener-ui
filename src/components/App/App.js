@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import './App.css';
-import { getUrls } from '../../apiCalls';
+import { getUrls, postUrl } from '../../apiCalls';
 import UrlContainer from '../UrlContainer/UrlContainer';
 import UrlForm from '../UrlForm/UrlForm';
 
@@ -13,6 +13,10 @@ class App extends Component {
   }
 
   componentDidMount() {
+    this.fetchUrls();
+  }
+
+  fetchUrls = () => {
     getUrls()
       .then((data) => {
         this.setState({ urls: data.urls });
@@ -22,12 +26,24 @@ class App extends Component {
       });
   }
 
+  handleSubmit = (newUrl) => {
+    postUrl(newUrl)
+      .then((data) => {
+        this.setState((prevState) => ({
+          urls: [...prevState.urls, data]
+        }));
+      })
+      .catch((error) => {
+        console.log('Error posting URL:', error);
+      });
+  }
+
   render() {
     return (
       <main className="App">
         <header>
           <h1>URL Shortener</h1>
-          <UrlForm />
+          <UrlForm onSubmit={this.handleSubmit} />
         </header>
         <UrlContainer urls={this.state.urls} />
       </main>
