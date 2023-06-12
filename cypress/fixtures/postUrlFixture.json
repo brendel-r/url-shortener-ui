@@ -1,0 +1,8 @@
+[
+  {
+    "id": 2,
+    "long_url": "https://anotherexampleofareallylongurlthatyouwanttoshorten.com",
+    "short_url": "http://localhost:3001/useshorturl/2",
+    "title": "Example URL 2"
+  }
+]
